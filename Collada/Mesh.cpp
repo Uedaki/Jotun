@@ -128,6 +128,7 @@ void collada::Mesh::instanciate(graphic::Scene &scene, glm::mat4 transform)
 	{
 		graphic::Mesh &mesh = scene.newMesh();
 
+		mesh.model = transform;
 		mesh.nbrVertex = triangle.nbrTriangles * 3;
 
 		mesh.vertex = triangle.data;

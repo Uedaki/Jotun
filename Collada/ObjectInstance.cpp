@@ -19,7 +19,7 @@ void collada::ObjectInstance::matrix(const xmlParser::Node &node)
 	for (uint16_t idx = 0; idx < 16; ++idx)
 	{
 		stream >> elem;
-		transform[idx / 4][idx % 4] = std::stof(elem);
+		transform[idx % 4][idx / 4] = std::stof(elem);
 	}
 }
 

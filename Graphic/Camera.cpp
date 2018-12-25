@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 graphic::Camera::Camera()
-	: moveSpeed(1), width(400), height(400), fov(45),
+	: moveSpeed(5), width(400), height(400), fov(45),
 	nearestPoint(0.1), furthestPoint(100),
 	mode(PERSPECTIVE)
 {
@@ -28,7 +28,22 @@ glm::mat4 graphic::Camera::getProjectionMatrix() const
 	}
 	else
 	{
-		return (glm::perspective(fov, width / height,
+		return (glm::perspective(fov, 16.0f / 9.0f,
 			nearestPoint, furthestPoint));
 	}
+}
+
+void graphic::Camera::movement(graphic::Window &context, float delta)
+{
+	width = static_cast<float>(context.getWidth());
+	height = static_cast<float>(context.getHeight());
+
+	if (context.isKeyPressed(GLFW_KEY_W) == GLFW_PRESS)
+		pos -= moveSpeed * glm::normalize(pos + front) * delta;
+	if (context.isKeyPressed(GLFW_KEY_S) == GLFW_PRESS)
+		pos += moveSpeed * glm::normalize(pos + front) * delta;
+	if (context.isKeyPressed(GLFW_KEY_A) == GLFW_PRESS)
+		pos -= glm::normalize(glm::cross(pos + front, up)) * moveSpeed * delta;
+	if (context.isKeyPressed(GLFW_KEY_D) == GLFW_PRESS)
+		pos += glm::normalize(glm::cross(pos + front, up)) * moveSpeed * delta;
 }

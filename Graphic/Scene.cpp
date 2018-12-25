@@ -37,25 +37,6 @@ void graphic::Scene::draw()
 	}
 }
 
-#include <iostream>
-
-void graphic::Scene::handleCamera(graphic::Window &context, float delta)
-{
-	camera.width = static_cast<float>(context.getWidth());
-	camera.height = static_cast<float>(context.getHeight());
-
-	if (context.isKeyPressed(GLFW_KEY_W) == GLFW_PRESS)
-		camera.pos += camera.moveSpeed * glm::normalize(camera.pos + camera.front) * delta;
-	if (context.isKeyPressed(GLFW_KEY_S) == GLFW_PRESS)
-		camera.pos -= camera.moveSpeed * glm::normalize(camera.pos + camera.front) * delta;
-	if (context.isKeyPressed(GLFW_KEY_A) == GLFW_PRESS)
-	{
-		camera.pos -= glm::normalize(glm::cross(camera.pos + camera.front, camera.up)) * camera.moveSpeed * delta;
-	}
-	if (context.isKeyPressed(GLFW_KEY_D) == GLFW_PRESS)
-		camera.pos += glm::normalize(glm::cross(camera.pos + camera.front, camera.up)) * camera.moveSpeed * delta;
-}
-
 void graphic::Scene::setDrawingMode(GLenum mode)
 {
 	drawingMode = mode;

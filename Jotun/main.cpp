@@ -11,7 +11,7 @@ int main()
 	graphic::Window win;
 
 	collada::Collada col;
-	col.loadFile("PrimitiveSphere.dae");
+	col.loadFile("ColladaFile/tripleCube.dae");
 	std::shared_ptr<graphic::Scene> scene = col.createScene();
 
 	auto lastTick = getTime();
@@ -20,7 +20,7 @@ int main()
 		auto currTick = getTime();
 		float delta = calcDelta(currTick, lastTick);
 		
-		scene->handleCamera(win, delta);
+		scene->getCamera().movement(win, delta);
 		scene->draw();
 		win.render();
 
