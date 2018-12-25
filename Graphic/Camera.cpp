@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 graphic::Camera::Camera()
-	: moveSpeed(5), width(400), height(400), fov(45),
+	: moveSpeed(5), width(400), height(400), ratio(16/9), fov(45),
 	nearestPoint(0.1), furthestPoint(100),
 	mode(PERSPECTIVE)
 {
@@ -28,7 +28,7 @@ glm::mat4 graphic::Camera::getProjectionMatrix() const
 	}
 	else
 	{
-		return (glm::perspective(fov, 16.0f / 9.0f,
+		return (glm::perspective(fov, ratio,
 			nearestPoint, furthestPoint));
 	}
 }
@@ -46,4 +46,41 @@ void graphic::Camera::movement(graphic::Window &context, float delta)
 		pos -= glm::normalize(glm::cross(pos + front, up)) * moveSpeed * delta;
 	if (context.isKeyPressed(GLFW_KEY_D) == GLFW_PRESS)
 		pos += glm::normalize(glm::cross(pos + front, up)) * moveSpeed * delta;
+}
+
+void graphic::Camera::setFov(float value)
+{
+	fov = value;
+}
+
+void graphic::Camera::setRatio(float value)
+{
+	ratio = value;
+}
+
+void graphic::Camera::setNearestPoint(float value)
+{
+	nearestPoint = value;
+}
+
+void graphic::Camera::setFurthestPoint(float value)
+{
+	furthestPoint = value;
+}
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
+#include <iostream>
+
+void graphic::Camera::setNewPosition(glm::mat4 transform)
+{
+	std::cout << glm::to_string(transform) << std::endl;
+	pos = glm::vec4(0, 0, 0, 1) * transform;
+	pos = transform[3];
+	up = glm::vec4(0, 1, 0, 0) * transform;
+	front = glm::vec4(0, 0, 1, 0) * transform;
+
+	std::cout << glm::to_string(pos) << std::endl
+		<< glm::to_string(up) << std::endl
+		<< glm::to_string(front) << std::endl;
 }

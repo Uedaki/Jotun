@@ -17,11 +17,12 @@ namespace graphic
 		PERSPECTIVE
 	};
 
-	class Camera
+	struct Camera
 	{
 		float moveSpeed;
 		float width;
 		float height;
+		float ratio;
 		float fov;
 		float nearestPoint;
 		float furthestPoint;
@@ -37,5 +38,12 @@ namespace graphic
 		GRAPHIC_API glm::mat4 getProjectionMatrix() const;
 
 		GRAPHIC_API void movement(Window &context, float delta);
+
+		GRAPHIC_API void setFov(float value);
+		GRAPHIC_API void setRatio(float value);
+		GRAPHIC_API void setNearestPoint(float value);
+		GRAPHIC_API void setFurthestPoint(float value);
+
+		GRAPHIC_API void setNewPosition(glm::mat4 transform);
 	};
 }

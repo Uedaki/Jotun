@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include "GeometryInstance.h"
+#include "Camera.h"
 
 void collada::Collada::loadFile(const std::string &file)
 {
@@ -42,6 +43,11 @@ void collada::Collada::createVisualScene(const xmlParser::Node &visualScene)
 		{"instance_geometry", [this](const xmlParser::Node &node)
 			{
 				return (std::make_shared<GeometryInstance>(node, this->getIdToNode()));
+			}
+		},
+		{"instance_camera", [this](const xmlParser::Node &node)
+			{
+				return (std::make_shared<BasicObjectInstance<Camera>>(node, this->getIdToNode()));
 			}
 		}
 	};
