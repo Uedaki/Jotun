@@ -11,7 +11,7 @@ int main()
 	graphic::Window win;
 
 	collada::Collada col;
-	col.loadFile("ColladaFile/simpleCamera.dae");
+	col.loadFile("ColladaFile/testSpot.dae");
 	std::shared_ptr<graphic::Scene> scene = col.createScene();
 
 	auto lastTick = getTime();

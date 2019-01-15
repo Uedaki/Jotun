@@ -34,11 +34,14 @@ namespace graphic
 
 		GRAPHIC_API void render();
 
-		GRAPHIC_API int isKeyPressed(int key);
+		GRAPHIC_API glm::vec2 getMousePos();
+		GRAPHIC_API int checkKeyboard(int key);
+		GRAPHIC_API int checkMouse(int key);
 		GRAPHIC_API bool isRunning();
 
 		GRAPHIC_API void resize(int width, int height);
 		GRAPHIC_API int getWidth() const;
 		GRAPHIC_API int getHeight() const;
+
 	};
 }

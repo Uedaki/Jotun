@@ -19,6 +19,9 @@
     <Filter Include="lib\glad">
       <UniqueIdentifier>{d03830a1-7aa4-401b-a037-53d8d96ea917}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\stb">
+      <UniqueIdentifier>{4b512347-e3d4-4c06-a036-bd7c5dd385ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -45,6 +48,12 @@
     <ClInclude Include="Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderGen.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="stb\stb_image.h">
+      <Filter>lib\stb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -70,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderGen.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="stb\stb_image.cpp">
+      <Filter>lib\stb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

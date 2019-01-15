@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+Jotun.json
+Jotun.srctrlbm
+Jotun.srctrldb
+Jotun.srctrlprj

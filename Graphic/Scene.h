@@ -14,21 +14,29 @@ namespace graphic
 {
 	class Scene
 	{
+	public:
+		enum DrawingMode
+		{
+			POINTS,
+			LINES,
+			TRIANGLES,
+
+			END_OF_ENUM
+		};
+
+	private:
 		Camera camera;
 		GLenum drawingMode;
 		std::vector<Mesh> meshes;
 
 	public:
-		Scene()
-			: drawingMode(GL_TRIANGLES)
-		{}
+		GRAPHIC_API Scene();
 
 		GRAPHIC_API Mesh &newMesh();
 
 		GRAPHIC_API void draw();
-		GRAPHIC_API void handleCamera(Window &context, float delta);
 
-		GRAPHIC_API void setDrawingMode(GLenum mode);
+		GRAPHIC_API void setDrawingMode(DrawingMode mode);
 		GRAPHIC_API Camera &getCamera();
 	};
 }

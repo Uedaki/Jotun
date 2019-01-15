@@ -15,13 +15,11 @@ namespace collada
 	class Camera
 	{
 		graphic::CameraMode mode;
-		std::pair<bool, float> moveSpeed;
-		std::pair<bool, float> width;
-		std::pair<bool, float> height;
-		std::pair<bool, float> ratio;
-		std::pair<bool, float> fov;
-		std::pair<bool, float> nearestPoint;
-		std::pair<bool, float> furthestPoint;
+		float width;
+		float height;
+		float fov;
+		float nearestPoint;
+		float furthestPoint;
 
 		void perspective(const xmlParser::Node &node);
 		void orthographic(const xmlParser::Node &node);

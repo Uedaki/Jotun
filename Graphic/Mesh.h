@@ -18,6 +18,7 @@ namespace graphic
 		unsigned int VAO;
 		unsigned int EBO;
 		unsigned int shader;
+		unsigned int texture;
 		unsigned int nbrVertex;
 		std::vector<float> vertex;
 		
@@ -25,5 +26,6 @@ namespace graphic
 		GRAPHIC_API void initVertexBuffer(unsigned int usage = 0x88E4 /* GL_STATIC_DRAW */);
 		GRAPHIC_API void mapDataFromVertexBuffer(uint32_t index, uint32_t elementSize, uint32_t offset, uint32_t sectionSize);
 		GRAPHIC_API void initShader(const std::string &vShader, const std::string &fShader);
+		GRAPHIC_API void initTexture(const std::string &file);
 	};
 }

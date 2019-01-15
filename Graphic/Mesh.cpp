@@ -1,12 +1,16 @@
 #include "stdafx.h"
 #include "Mesh.h"
 
+#include <string>
+#include <fstream>
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
+#include <stb/stb_image.h>
 
 graphic::Mesh::Mesh()
 	: model(glm::mat4(1))
 {}
+
 
 void graphic::Mesh::initVertexBuffer(unsigned int usage)
 {
@@ -28,7 +32,7 @@ void graphic::Mesh::initVertexBuffer(unsigned int usage)
 void graphic::Mesh::mapDataFromVertexBuffer(uint32_t index, uint32_t elementSize, uint32_t offset, uint32_t sectionSize)
 {
 	glVertexAttribPointer(index, elementSize, GL_FLOAT, GL_FALSE, sectionSize * sizeof(float), reinterpret_cast<void*>(offset * sizeof(float)));
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(index);
 }
 
 void graphic::Mesh::initShader(const std::string &vCode, const std::string &fCode)
@@ -46,7 +50,7 @@ void graphic::Mesh::initShader(const std::string &vCode, const std::string &fCod
 	if (!success)
 	{
 		glGetShaderInfoLog(vShader, 512, nullptr, infoLog);
-		OutputDebugStringA("[!] Compile vShader error: ");
+		OutputDebugStringA("[!] Compile vShader error\n");
 		OutputDebugStringA(infoLog);
 	}
 
@@ -60,7 +64,7 @@ void graphic::Mesh::initShader(const std::string &vCode, const std::string &fCod
 	if (!success)
 	{
 		glGetShaderInfoLog(fShader, 512, nullptr, infoLog);
-		OutputDebugStringA("[!] Compile vShader error: ");
+		OutputDebugStringA("[!] Compile fShader error\n");
 		OutputDebugStringA(infoLog);
 	}
 
@@ -80,4 +84,30 @@ void graphic::Mesh::initShader(const std::string &vCode, const std::string &fCod
 
 	glDeleteShader(vShader);
 	glDeleteShader(fShader);
+}
+
+void graphic::Mesh::initTexture(const std::string &file)
+{
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load(file.c_str(), &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glGenTextures(1, &texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	
+		stbi_image_free(data);
+	}
+	else
+	{
+		OutputDebugStringA("Failed to load texture");
+	}
 }

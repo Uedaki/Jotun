@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include "GeometryInstance.h"
+#include "LightInstance.h"
 #include "Camera.h"
 
 void collada::Collada::loadFile(const std::string &file)
@@ -39,18 +40,36 @@ std::shared_ptr<graphic::Scene> collada::Collada::createScene()
 
 void collada::Collada::createVisualScene(const xmlParser::Node &visualScene)
 {
-	const std::map<std::string, std::function<std::shared_ptr<ObjectInstance>(const xmlParser::Node &node)>> router = {
-		{"instance_geometry", [this](const xmlParser::Node &node)
+	const std::map<std::string, std::function<std::shared_ptr<ObjectInstance>(const xmlParser::Node &node, std::vector<std::shared_ptr<Light>> &lightContext)>> router = {
+		{"instance_geometry", [this](const xmlParser::Node &node, std::vector<std::shared_ptr<Light>> &lightContext)
 			{
-				return (std::make_shared<GeometryInstance>(node, this->getIdToNode()));
+				return (std::make_shared<GeometryInstance>(node, lightContext, this->getIdToNode()));
 			}
 		},
-		{"instance_camera", [this](const xmlParser::Node &node)
+		{"instance_camera", [this](const xmlParser::Node &node, std::vector<std::shared_ptr<Light>> &lightContext)
 			{
 				return (std::make_shared<BasicObjectInstance<Camera>>(node, this->getIdToNode()));
 			}
 		}
 	};
+
+	std::vector<std::shared_ptr<Light>> lightContext;
+	for (auto &node : visualScene.getChildren())
+	{
+		if (node.getTag() != "node")
+			continue;
+		for (auto &child : node.getChildren())
+		{
+			if (child.getTag() == "instance_light")
+			{
+				const std::string &url = child.getParameter("url").getString();
+				LightInstance inst(idToNode.at(url.substr(1, url.length() - 1)));
+				modifyInstance(node, inst);
+				lightContext.push_back(inst.getLight());
+				break;
+			}
+		}
+	}
 
 	for (auto &node : visualScene.getChildren())
 	{
@@ -62,7 +81,7 @@ void collada::Collada::createVisualScene(const xmlParser::Node &visualScene)
 			if (child.getTag().find_first_of("instance") == 0
 				&& router.find(child.getTag()) != router.cend())
 			{
-				object = router.at(child.getTag())(child);
+				object = router.at(child.getTag())(child, lightContext);
 				break;
 			}
 		}

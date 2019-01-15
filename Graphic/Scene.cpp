@@ -2,12 +2,15 @@
 #include <glad/glad.h>
 #include "Scene.h"
 
+#include <map>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/string_cast.hpp>
+graphic::Scene::Scene()
+{
+	setDrawingMode(TRIANGLES);
+}
 
 graphic::Mesh &graphic::Scene::newMesh()
 {
@@ -31,15 +34,24 @@ void graphic::Scene::draw()
 		unsigned int projLoc = glGetUniformLocation(mesh.shader, "projection");
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
 
+		if (mesh.texture != 0)
+			glBindTexture(GL_TEXTURE_2D, mesh.texture);
+
 		glUseProgram(mesh.shader);
 		glBindVertexArray(mesh.VAO);
 		glDrawArrays(drawingMode, 0, mesh.nbrVertex);
 	}
 }
 
-void graphic::Scene::setDrawingMode(GLenum mode)
+void graphic::Scene::setDrawingMode(graphic::Scene::DrawingMode mode)
 {
-	drawingMode = mode;
+	std::vector<GLenum> glMode(DrawingMode::END_OF_ENUM);
+	glMode[POINTS] = GL_POINTS;
+	glMode[LINES] = GL_LINES;
+	glMode[TRIANGLES] = GL_TRIANGLES;
+
+	if (mode >= 0 && mode < END_OF_ENUM)
+		drawingMode = glMode[mode];
 }
 
 graphic::Camera &graphic::Scene::getCamera()

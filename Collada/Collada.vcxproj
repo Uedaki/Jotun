@@ -155,11 +155,17 @@
     <ClInclude Include="Collada.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GeometryInstance.h" />
+    <ClInclude Include="Lambert.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightInstance.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ObjectInstance.h" />
+    <ClInclude Include="Phong.h" />
     <ClInclude Include="STB\stb_image.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Value.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -167,8 +173,13 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="GeometryInstance.cpp" />
+    <ClCompile Include="Lambert.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightInstance.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ObjectInstance.cpp" />
+    <ClCompile Include="Phong.cpp" />
     <ClCompile Include="STB\stb_image.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -176,6 +187,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Value.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Graphic\Graphic.vcxproj">

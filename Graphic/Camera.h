@@ -20,9 +20,9 @@ namespace graphic
 	struct Camera
 	{
 		float moveSpeed;
+		float sensitivity;
 		float width;
 		float height;
-		float ratio;
 		float fov;
 		float nearestPoint;
 		float furthestPoint;
@@ -40,7 +40,6 @@ namespace graphic
 		GRAPHIC_API void movement(Window &context, float delta);
 
 		GRAPHIC_API void setFov(float value);
-		GRAPHIC_API void setRatio(float value);
 		GRAPHIC_API void setNearestPoint(float value);
 		GRAPHIC_API void setFurthestPoint(float value);
 

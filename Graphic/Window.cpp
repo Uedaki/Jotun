@@ -7,11 +7,20 @@
 static int width;
 static int height;
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void framebuffer_size_callback(GLFWwindow* window, int newWidth, int newHeight)
 {
-	width = width;
-	height = height;
+	width = newWidth;
+	height = newHeight;
 	glViewport(0, 0, width, height);
+}
+
+static double mouseX = 0;
+static double mouseY = 0;
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	mouseX = xpos;
+	mouseY = ypos;
 }
 
 graphic::Window::Context::Context()
@@ -50,6 +59,7 @@ graphic::Window::Window(const std::string &title, const graphic::Window::Context
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glfwSetFramebufferSizeCallback(win, framebuffer_size_callback);
+	glfwSetCursorPosCallback(win, mouse_callback);
 }
 
 graphic::Window::~Window()
@@ -66,9 +76,19 @@ void graphic::Window::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-int graphic::Window::isKeyPressed(int key)
+glm::vec2 graphic::Window::getMousePos()
+{
+	return (glm::vec2(mouseX, mouseY));
+}
+
+int graphic::Window::checkKeyboard(int key)
 {
 	return (glfwGetKey(this->win, key));
+}
+
+int graphic::Window::checkMouse(int key)
+{
+	return (glfwGetMouseButton(this->win, key));
 }
 
 bool graphic::Window::isRunning()
