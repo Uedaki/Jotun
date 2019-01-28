@@ -1,6 +1,6 @@
+#include <chrono>
 #include <Graphic/Window.h>
 #include <Graphic/Scene.h>
-#include <chrono>
 #include <Collada/Collada.h>
 
 #define getTime std::chrono::high_resolution_clock::now
@@ -11,7 +11,7 @@ int main()
 	graphic::Window win;
 
 	collada::Collada col;
-	col.loadFile("ColladaFile/testSpot.dae");
+	col.loadFile("ColladaFile/pres.dae");
 	std::shared_ptr<graphic::Scene> scene = col.createScene();
 
 	auto lastTick = getTime();

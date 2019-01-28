@@ -34,6 +34,7 @@ graphic::Window::Window(const std::string &title, const graphic::Window::Context
 	height = context.height;
 	
 	glfwInit();
+	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -54,6 +55,7 @@ graphic::Window::Window(const std::string &title, const graphic::Window::Context
 
 	glViewport(0, 0, width, height);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_MULTISAMPLE);
 
 	glClearColor(bckgdColor[0], bckgdColor[1], bckgdColor[2], 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

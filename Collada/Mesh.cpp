@@ -126,8 +126,6 @@ void collada::Mesh::fillVertexData(collada::Mesh::Triangles &triangle, std::vect
 	}
 }
 
-#include <iostream>
-
 void collada::Mesh::setMaterial(const std::map<std::string, std::shared_ptr<Material>> &materials)
 {
 	for (auto &triangle : triangles)
@@ -149,10 +147,7 @@ void collada::Mesh::setMaterial(const std::map<std::string, std::shared_ptr<Mate
 			gen.generateVertexShader(triangle.vShader);
 			gen.generateFragShader(triangle.fShader);
 
-			std::cout << "--------- Vertex shader\n"
-				<< triangle.vShader
-				<< "\n\n --------- Fragment shader\n"
-				<< triangle.fShader << std::endl;
+			materials.at(triangle.material)->getTextures(triangle.texture);
 		}
 	}
 }

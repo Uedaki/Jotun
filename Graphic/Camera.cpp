@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 graphic::Camera::Camera()
-	: moveSpeed(5), sensitivity(0.25), width(400), height(400), fov(45),
+	: moveSpeed(1), sensitivity(0.1), width(400), height(400), fov(45),
 	nearestPoint(0.1), furthestPoint(100),
 	mode(PERSPECTIVE)
 {
@@ -50,7 +50,7 @@ void graphic::Camera::movement(graphic::Window &context, float delta)
 	}
 	else if (context.checkMouse(GLFW_MOUSE_BUTTON_MIDDLE))
 	{
-		pos -= ypos * glm::normalize(up) * sensitivity;
+		pos += ypos * glm::normalize(up) * sensitivity;
 		pos -= xpos * glm::normalize(glm::cross(front, up)) * sensitivity;
 	}
 	else if (context.checkMouse(GLFW_MOUSE_BUTTON_RIGHT))
